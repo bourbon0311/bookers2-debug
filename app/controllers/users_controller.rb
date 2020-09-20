@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    #@user = User.page(params[:page]).reverse_order
   end
 
   def index
