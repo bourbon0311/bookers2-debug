@@ -20,13 +20,21 @@
 	<tbody>
 		<% @users.each do |user| %>
 		<tr>
-			<td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
+			<td><%= attachment_image_tag(user, :profile_image, :fill, 35, 35, fallback: "no-image-mini.jpg") %></td>
 			<td><%= user.name %></td>
+			<td><%= "フォロー数: #{user.follower.count}" %><td>
+			<td><%= "フォロワー数: #{user.followed.count}" %></td>
+			<% if current_user.following?(user) %>
+				<td>
+					<%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
+				</td>
+			<% else %>
+				<td>
+					<%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+				</td>
+			<% end %>
 			<td><%= link_to "Show", user_path(user), class: "user_#{user.id}" %></td>
 
-					<td>
-						<%= link_to "#{user.book_comments.count} コメント", user_path(user.id) %>
-					</td>
 		</tr>
 		<% end %>
 	</tbody>

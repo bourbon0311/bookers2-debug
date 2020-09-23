@@ -14,6 +14,24 @@
 		<th>introduction</th>
 		<th><%= user.introduction %></th>
 	</tr>
+	<tr>
+		<th>
+	  		フォロー数: <%= link_to user.follower.count, relationships_follower_path(user_id: user.id) %>
+		</th>
+	</tr>
+	<tr>
+		<th>
+	  		フォロワー数: <%= link_to user.followed.count, relationships_followed_path(user_id: user.id) %>
+		</th>
+	</tr>
+	<% unless user == current_user %>
+  		<% if current_user.following?(user) %>
+      		<th><%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST, class: "btn btn-primary" %></th>
+      	<% else %>
+      		<th><%= link_to 'フォローする', follow_path(user.id), method: :POST, class: "btn btn-success" %></th>
+      	<% end %>
+    <% end %>
+ 	</tr>
 </table>
 
 <div class="row">
